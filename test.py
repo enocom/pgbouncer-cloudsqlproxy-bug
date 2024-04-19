@@ -19,7 +19,7 @@ async def main() -> None:
         # connect to cloudsql via pgbouncer
         'postgres://postgres:postgres@127.0.0.1:5432/cloudsql',
         # connect to postgres via pgbouncer
-        'postgres://postgres:postgres@127.0.0.1:5433/postgres',
+        'postgres://postgres:postgres@127.0.0.1:5432/local',
         # connect to cloudsql directly
         'postgres://postgres:postgres@127.0.0.1:5434/postgres',
     ):
@@ -27,6 +27,6 @@ async def main() -> None:
         async with anyio.create_task_group() as tg:
             for _ in range(32):
                 tg.start_soon(hog, dsn, durations)
-        print(f'{dsn}:\n{durations}\n\n')
+        print(f'{dsn}:\n{[f'{d:.2f}s' for d in durations]}\n\n')
 
 anyio.run(main)
