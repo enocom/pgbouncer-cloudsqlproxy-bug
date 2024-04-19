@@ -1,0 +1,2 @@
+"postgres" "postgres"
+"pgbouncer_admin" "pgbouncer_admin"
