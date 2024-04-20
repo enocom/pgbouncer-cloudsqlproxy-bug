@@ -1,30 +1,15 @@
-# Spin up cloudsql-proxy and pgbouncer
 services:
   cloudql:
     image:  gcr.io/cloud-sql-connectors/cloud-sql-proxy:2.11.0
     networks:
       - default
-    command:
-      - --address=0.0.0.0
-      - --port=5432
-      - --debug-logs
-      - --credentials-file=/key.json
-      - ${CLOUDSQL_INSTANCE_CONNECTION_NAME}
-    ports:
-      - "5433:5432"
-    volumes:
-      - ./key.json:/key.json
-
-  postgres:
-    image: postgres:15
-    networks:
-      - default
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DATABASE: postgres
-    ports:
-      - "5434:5432"
+      # configure proxy with environment variables
+      # ICN should be the instance connection name
+      - CSQL_PROXY_INSTANCE_CONNECTION_NAME=${ICN}
+      - CSQL_PROXY_ADDRESS=0.0.0.0
+      - CSQL_PROXY_PORT=5432
+      - CSQL_PROXY_TOKEN=${TOKEN}
 
   pgbouncer:
     image: edoburu/pgbouncer:latest
