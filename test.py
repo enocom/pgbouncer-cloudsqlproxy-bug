@@ -15,12 +15,11 @@ async def main() -> None:
         durations.append(end - start)
 
     for dsn in (
-        # connect to cloudsql via pgbouncer + proxy
-        'postgres://postgres:postgres@127.0.0.1:5432/proxy',
-        # connect to cloudsql via pgbouncer + direct
-        'postgres://postgres:postgres@127.0.0.1:5432/direct',
-        # connect to cloudsql direct (change IP to be private or public iP)
-        'postgres://postgres:postgres@35.238.106.212/postgres',
+        # Connection pooler to database connection
+        'postgres://postgres:postgres@127.0.0.1/direct',
+
+        # Direct to database connection
+        # 'postgres://postgres:postgres@35.238.106.212/postgres',
     ):
         durations: list[float] = []
         async with anyio.create_task_group() as tg:

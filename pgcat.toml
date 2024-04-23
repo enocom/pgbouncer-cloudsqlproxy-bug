@@ -1,0 +1,21 @@
+[general]
+
+host = "0.0.0.0"
+port = 5432
+admin_username = "pgcat"
+admin_password = "pgcat"
+shards = 0
+
+[pools.direct.users.0]
+
+username = "postgres"
+password = "postgres"
+pool_size = 100
+min_pool_size = 0
+pool_mode = "transaction"
+
+[pools.direct.shards.0]
+servers = [
+  ["35.238.106.212", 5432, "primary"]
+]
+database = "postgres"
